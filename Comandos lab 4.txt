@@ -1,0 +1,108 @@
+Comandos usados practica 1
+
+============================================
+
+sudo dnf install httpd
+sudo systemctl enable httpd
+sudo systemctl start httpd
+sudo systemctl status httpd
+sudo mkdir /var/www/html/pagina1
+sudo nano /var/www/html/pagina1/index.html
+
+<html><body><h1> Hola mundo </h1></body></html>
+
+sudo nano /etc/httpd/conf.d/pagina1.conf
+
+<VirtualHost *:80>
+    DocumentRoot /var/www/html/pagina1
+</VirtualHost>
+
+sudo systemctl restart httpd
+ifconfig
+
+http://10.0.0.226:80
+
+sudo mkdir /var/www/html/pagina2
+sudo nano /var/www/html/pagina2/index.html
+
+<html><body><h1> Michael Arturo, 20251410, SO3 </h1></body></html>
+
+sudo nano /etc/httpd/conf.d/pagina2.conf
+
+Listen 8080
+<VirtualHost *:8080>
+    DocumentRoot /var/www/html/paginaw
+</VirtualHost>
+
+sudo systemctl restart httpd
+
+http://10.0.0.226:8080
+
+============================================
+
+Comandos usados practica 2
+
+============================================
+
+sudo dnf install postfix s-nail cyrus-sasl-plain
+sudo systemctl enable postfix
+sudo systemctl start postfix
+sudo systemctl status postfix
+
+sudo nano /etc/postfix/main.cf
+
+relayhost = [smtp.gmail.com]:587
+smtp_tls_CAfile = /etc/ssl/certs/ca-bundle.cr
+smtp_use_tls = yes
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+
+
+sudo nano /etc/postfix/sasl_passwd
+
+[smtp.gmail.com]:587 michaelarturom144@gmail.com:[contrasena_de_aplicacion]
+
+sudo postmap /etc/postfix/sasl_passwd
+sudo chmod 600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
+sudo systemctl restart postfix
+echo "prueba" | mail -s "prueba" michaelarturom144@gmail.com
+echo "Michael Arturo - 20251410" | mail -s "MambruSeFueALaGuerra" os3conadrian@gmail.com
+
+============================================
+
+Comandos usados practica 3
+
+============================================
+sudo dnf install cups
+sudo dnf install oracle-epel-release-el9
+sudo dnf update
+sudo dnf install cups-pdf
+sudo nano /etc/cups/cupsd.conf
+
+Port 631
+Listen 10.0.0.226:631
+
+Location />
+  # Allow remote administration...
+  Order allow,deny
+  Allow all
+</Location>
+
+<Location /admin>
+  # Allow remote administration...
+  Order allow,deny
+  Allow all
+</Location>
+
+<Location /admin/conf>
+  # Allow remote access to the configuration files...
+  Order allow,deny
+  Allow all
+</Location>
+
+sudo systemctl restart cups
+
+http://10.0.0.226:631
+
+
