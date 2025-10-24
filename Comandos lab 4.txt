@@ -83,7 +83,7 @@ sudo nano /etc/cups/cupsd.conf
 Port 631
 Listen 10.0.0.226:631
 
-Location />
+<Location />
   # Allow remote administration...
   Order allow,deny
   Allow all
